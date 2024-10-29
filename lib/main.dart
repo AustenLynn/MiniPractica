@@ -14,7 +14,6 @@ class RockPaperScissorsApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: RockPaperScissors(),
-
     );
   }
 }
@@ -33,6 +32,7 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
   void playGame() {
     setState(() {
       result = getResult(player1Choice, player2Choice);
+      showDialogWithResult(result);
     });
   }
 
@@ -41,11 +41,40 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
     if ((player1 == 'Rock' && player2 == 'Scissors') ||
         (player1 == 'Paper' && player2 == 'Rock') ||
         (player1 == 'Scissors' && player2 == 'Paper')) {
-      return 'Jugador 1 gana!';
+      return 'Jugador Rojo gana!';
     } else {
-      return 'Jugador 2 gana!';
+      return 'Jugador Azul gana!';
     }
+  }
 
+  void showDialogWithResult(String result) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Resultado'),
+          content: Text(result),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                resetGame();
+              },
+
+              child: Text('Jugar de nuevo'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void resetGame() {
+    setState(() {
+      player1Choice = '';
+      player2Choice = '';
+      result = '';
+    });
   }
 
   Widget buildChoiceButton(String choice, int player) {
@@ -60,11 +89,17 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
             } else {
               player2Choice = choice;
             }
+
+            // Check if both players have made their choice to play the game
+            if (player1Choice.isNotEmpty && player2Choice.isNotEmpty) {
+              playGame();
+            }
           });
         },
         child: Icon(choiceIcons[choice], size: 50, color: Colors.black),
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.all(15), backgroundColor: (player == 1 && player1Choice == choice) ||
+          padding: EdgeInsets.all(15),
+          backgroundColor: (player == 1 && player1Choice == choice) ? Colors.redAccent:
               (player == 2 && player2Choice == choice)
               ? Colors.blueAccent
               : Colors.grey[300],
@@ -80,7 +115,6 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(height: 10),
-          // Player 1 buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -89,17 +123,7 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
               buildChoiceButton('Scissors', 1),
             ],
           ),
-          SizedBox(height: 80),
-          ElevatedButton(
-            onPressed: player1Choice.isNotEmpty && player2Choice.isNotEmpty
-                ? playGame
-                : null,
-            child: Text('Jugar'),
-          ),
-          SizedBox(height: 80),
-          SizedBox(height: 10),
-          // Player 2 buttons
-
+          SizedBox(height: 400),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -107,12 +131,6 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
               buildChoiceButton('Paper', 2),
               buildChoiceButton('Scissors', 2),
             ],
-          ),
-          SizedBox(height: 40),
-          SizedBox(height: 40),
-          Text(
-            'Resultado: $result',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
         ],
       ),
