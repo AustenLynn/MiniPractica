@@ -109,7 +109,6 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Piedra, papel o tijeras (Por turnos)'),
