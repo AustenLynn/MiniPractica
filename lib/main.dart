@@ -4,9 +4,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 void main() => runApp(RockPaperScissorsApp());
 
 final Map<String, IconData> choiceIcons = {
-  'Rock': FontAwesomeIcons.handBackFist,
-  'Paper': FontAwesomeIcons.hand,
-  'Scissors': FontAwesomeIcons.handScissors,
+  'Piedra': FontAwesomeIcons.handBackFist,
+  'Papel': FontAwesomeIcons.hand,
+  'Tijeras': FontAwesomeIcons.handScissors,
 };
 
 class RockPaperScissorsApp extends StatelessWidget {
@@ -27,7 +27,7 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
   String result = '';
   String player1Choice = '';
   String player2Choice = '';
-  List<String> choices = ['Rock', 'Paper', 'Scissors'];
+  List<String> choices = ['Piedra', 'Papel', 'Tijeras'];
 
   void playGame() {
     setState(() {
@@ -38,9 +38,9 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
 
   String getResult(String player1, String player2) {
     if (player1 == player2) return 'Empate!';
-    if ((player1 == 'Rock' && player2 == 'Scissors') ||
-        (player1 == 'Paper' && player2 == 'Rock') ||
-        (player1 == 'Scissors' && player2 == 'Paper')) {
+    if ((player1 == 'Piedra' && player2 == 'Tijeras') ||
+        (player1 == 'Papel' && player2 == 'Piedra') ||
+        (player1 == 'Tijeras' && player2 == 'Papel')) {
       return 'Jugador Rojo gana!';
     } else {
       return 'Jugador Azul gana!';
@@ -79,8 +79,8 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
 
   Widget buildChoiceButton(String choice, int player) {
     return SizedBox(
-      width: 100,  // Set the desired width
-      height: 100, // Set the desired height
+      width: 100,
+      height: 100,
       child: ElevatedButton(
         onPressed: () {
           setState(() {
@@ -90,7 +90,6 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
               player2Choice = choice;
             }
 
-            // Check if both players have made their choice to play the game
             if (player1Choice.isNotEmpty && player2Choice.isNotEmpty) {
               playGame();
             }
@@ -110,26 +109,30 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
 
   @override
   Widget build(BuildContext context) {
+    computerChoice = choices[Random().nextInt(3)];
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Piedra, papel o tijeras (Por turnos)'),
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              buildChoiceButton('Rock', 1),
-              buildChoiceButton('Paper', 1),
-              buildChoiceButton('Scissors', 1),
+              buildChoiceButton('Piedra', 1),
+              buildChoiceButton('Papel', 1),
+              buildChoiceButton('Tijeras', 1),
             ],
           ),
           SizedBox(height: 400),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              buildChoiceButton('Rock', 2),
-              buildChoiceButton('Paper', 2),
-              buildChoiceButton('Scissors', 2),
+              buildChoiceButton('Piedra', 2),
+              buildChoiceButton('Papel', 2),
+              buildChoiceButton('Tijeras', 2),
             ],
           ),
         ],
