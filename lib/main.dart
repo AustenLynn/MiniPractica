@@ -109,7 +109,6 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
 
   @override
   Widget build(BuildContext context) {
-    computerChoice = choices[Random().nextInt(3)];
 
     return Scaffold(
       appBar: AppBar(
