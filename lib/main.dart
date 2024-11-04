@@ -25,18 +25,12 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
     'Papel': FontAwesomeIcons.hand,
     'Tijeras': FontAwesomeIcons.handScissors,
   };
-
   String result = '';
   String player1Choice = '';
   String player2Choice = '';
   List<String> choices = ['Piedra', 'Papel', 'Tijeras'];
 
-  void playGame() {
-    setState(() {
-      result = getResult(player1Choice, player2Choice);
-      showDialogWithResult(result);
-    });
-  }
+
 
   String getResult(String player1, String player2) {
     if (player1 == player2) return 'Empate!';
@@ -47,6 +41,21 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
     } else {
       return 'Jugador Azul gana!';
     }
+  }
+
+  void playGame() {
+    setState(() {
+      result = getResult(player1Choice, player2Choice);
+      showDialogWithResult(result);
+    });
+  }
+
+  void resetGame() {
+    setState(() {
+      player1Choice = '';
+      player2Choice = '';
+      result = '';
+    });
   }
 
   void showDialogWithResult(String result) {
@@ -71,13 +80,6 @@ class _RockPaperScissorsState extends State<RockPaperScissors> {
     );
   }
 
-  void resetGame() {
-    setState(() {
-      player1Choice = '';
-      player2Choice = '';
-      result = '';
-    });
-  }
 
   Widget buildChoiceButton(String choice, int player) {
     return SizedBox(
