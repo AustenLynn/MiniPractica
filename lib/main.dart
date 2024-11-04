@@ -3,11 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() => runApp(RockPaperScissorsApp());
 
-final Map<String, IconData> choiceIcons = {
-  'Piedra': FontAwesomeIcons.handBackFist,
-  'Papel': FontAwesomeIcons.hand,
-  'Tijeras': FontAwesomeIcons.handScissors,
-};
+
 
 class RockPaperScissorsApp extends StatelessWidget {
   @override
@@ -24,6 +20,12 @@ class RockPaperScissors extends StatefulWidget {
 }
 
 class _RockPaperScissorsState extends State<RockPaperScissors> {
+  final Map<String, IconData> choiceIcons = {
+    'Piedra': FontAwesomeIcons.handBackFist,
+    'Papel': FontAwesomeIcons.hand,
+    'Tijeras': FontAwesomeIcons.handScissors,
+  };
+
   String result = '';
   String player1Choice = '';
   String player2Choice = '';
